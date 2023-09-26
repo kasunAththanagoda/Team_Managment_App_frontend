@@ -3,12 +3,14 @@ import VueRouter from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
 import ProjectsView from '@/views/ProjectsView.vue'
 import TeamView from '@/views/TeamView.vue'
+import LoginView from '@/views/LoginView'
+import SignupView from '@/views/SignUpView'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/dashboard',
     name: 'DashboardView',
     component: DashboardView
   },
@@ -21,6 +23,16 @@ const routes = [
     path: '/team',
     name: 'team',
     component:TeamView
+  },
+  {
+    path: '/',
+    name: 'login',
+    component:LoginView
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component:SignupView
   }
 ]
 
