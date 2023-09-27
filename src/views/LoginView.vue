@@ -89,6 +89,7 @@ export default {
       .then(response=>{
         console.log(response.data)
         if(response.data.code==200){
+          sessionStorage.setItem("userName",this.username)
           this.$router.push("/dashboard");
         }
         else{
