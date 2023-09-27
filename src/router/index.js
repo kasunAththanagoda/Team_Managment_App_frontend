@@ -25,7 +25,7 @@ const routes = [
     component:TeamView
   },
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     component:LoginView
   },
