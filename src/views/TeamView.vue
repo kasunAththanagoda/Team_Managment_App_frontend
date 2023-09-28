@@ -31,6 +31,8 @@
   </template>
   
   <script>
+  import api from "@/Services/api.js";
+
   export default {
     data() {
       return {
@@ -42,6 +44,30 @@
           { name: 'Yoshi', role: 'Sales guru',avatar: "/img 5.jpg"}
         ]
       }
+    },
+
+    methods:{
+      getTeamMembers(){
+        api
+        .get("api/v1/users/getAllUsers")
+        .then(response=>{
+          console.log(response)
+          response.data.data.forEach(element => {
+            this.team.push({
+              name:element.userFirstName,
+              role:element.userJobTitle,
+            })
+          });
+          console.table("team",this.team);
+        })
+        .catch(error=>{
+          console.log(error)
+        });
+      }
+    },
+
+    mounted(){
+      this.getTeamMembers();
     }
   }
   </script>
