@@ -10,7 +10,7 @@
     <v-toolbar text  >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="text-uppercase grey--text">
-        <span class="font-weight-light">Todo</span>
+        <span class="font-weight-light">Team Manager</span>
         <span>App</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -53,7 +53,7 @@
       <v-row align-center>
       <v-col >
         <v-avatar size="100" class="ma-5"><img src="/img 1.jpg" alt="avatar image"></v-avatar>
-        <p class="white--text subheading mt-1 mx-5">Kasun</p>
+        <p class="white--text subheading mt-1 mx-5">{{ user }}</p>
       </v-col>
     </v-row>
     <v-row class="ma-5">
@@ -82,6 +82,7 @@ export default {
   data() {
     return {
       drawer: false,
+      user:"",
       links:[
         {icon:'mdi-view-dashboard',text:'Dashboard',route:'/dashboard'},
         {icon:'mdi-folder',text:'My projects',route:'/projects'},
@@ -90,6 +91,11 @@ export default {
     snackbar :false,
     };
   },
+
+  mounted(){
+    if(sessionStorage.getItem("userName"))
+    this.user=sessionStorage.getItem("userName");
+  }
 };
 </script>
 

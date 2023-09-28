@@ -77,7 +77,6 @@ export default {
 
   methods: {
     login() {
-      console.log("1111")
       let loginDetails = {
         "userName": this.username,
         "password": this.password,
