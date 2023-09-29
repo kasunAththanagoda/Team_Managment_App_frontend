@@ -38,12 +38,16 @@
         </v-tooltip>
       </v-row>
 
-      <v-card text v-for="project in projects" :key="project.title" class="mt-1">
+      <v-card text v-for="project in projects" :key="project.taskId" class="mt-2">
         <div :class="`pa-3 project ${project.status}`" >
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="6" md="3">
               <div class="caption grey--text">Project title</div>
               <div>{{ project.title }}</div>
+            </v-col>
+            <v-col cols="6" md="3">
+              <div class="caption grey--text">Task title</div>
+              <div>{{ project.task }}</div>
             </v-col>
 
             <v-col cols="6" sm="4" md="2">
@@ -72,8 +76,10 @@
 </template>
 
 <script>
-import db from "@/fb";
-import { collection, onSnapshot } from "firebase/firestore"; 
+// import db from "@/fb";
+// import { collection, onSnapshot } from "firebase/firestore"; 
+import api from "@/Services/api.js";
+import { parse, isPast } from "date-fns";
 
 export default {
   name: "DashboardView",
@@ -116,6 +122,16 @@ export default {
       //   },
       // ],
 
+    //   private ProjectEntity project;
+    // private int taskId;
+    // private String title;
+    // private String content;
+    // private String assignedTo;
+    // private String createdBy;
+    // private String createdDate;
+    // private String dueDate;
+    // private boolean activeStatus;
+
       projects :[],
     };
   },
@@ -124,39 +140,60 @@ export default {
     sortBy(property) {
       this.projects.sort((a, b) => (a[property] < b[property] ? -1 : 1));
     },
+
+    getTasks(){
+     api
+    .get("api/v1/tasks/getTasks")
+    .then((result) => {
+      console.log("results",result)
+      result.data.data.forEach(element => {
+        console.log("statussssss",element.activeStatus)
+        let statuss="";
+        if(element.activeStatus){ //1-ongoing
+          const parsedDate = parse(element.dueDate, "dd/MM/yyyy", new Date());
+          const isOverdue = isPast(parsedDate);
+          console.log(element.dueDate,"111111111",element.activeStatus,"22222",isOverdue) //correct this
+          statuss=isOverdue? "overdue":"ongoing";
+        }
+        else{
+          statuss="complete"
+        }
+        this.projects.push({
+          taskId: element.taskId,
+          title: element.project.projectName,
+          task: element.title,
+          person: element.assignedTo,
+          due: element.dueDate,
+          status: statuss,
+          content: element.content
+        })
+        
+      });
+      console.table(this.projects);
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
   },
 
+  
+
   async created(){
-    // db.collection('projects').onSnapshot(res=>{
-    //   const changes=res.docChanges();
+   this.getTasks()
+//     onSnapshot(collection(db, "projects"), docsSnap => {
+//       const changes=docsSnap.docChanges();
 
-    //   changes.forEach(change => {
-    //     if(change.type=='added'){
-    //       this.projects.push({
-    //         ...change.doc.data(),
-    //         id : change.doc.id
-    //       })
-    //     }
-        
-    //   });
-    // })
-
-    onSnapshot(collection(db, "projects"), docsSnap => {
-      const changes=docsSnap.docChanges();
-
-      changes.forEach(change=>{
-        if(change.type=== 'added'){
-          this.projects.push(
-            {
-              ...change.doc.data(),
-              id : change.doc.id
-            }
-          )
-        }
-      });
-
-
-});
+//       changes.forEach(change=>{
+//         if(change.type=== 'added'){
+//           this.projects.push(
+//             {
+//               ...change.doc.data(),
+//               id : change.doc.id
+//             }
+//           )
+//         }
+//       });
+// });
 
 
   },
