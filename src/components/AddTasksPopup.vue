@@ -1,15 +1,10 @@
 <template>
-  <div class="text-center">
+  <div>
     <v-dialog v-model="dialog" width="600">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="success" tile v-bind="attrs" v-on="on">
-          Add new projects
-        </v-btn>
-      </template>
 
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Add New Project
+            Add new Task
         </v-card-title>
 
         <v-card-text>
@@ -107,14 +102,17 @@
     </v-dialog>
   </div>
 </template>
-
-<script>
+  
+  <script>
 //import format from 'date-fns/format';
 // import db from '@/fb';
 // import { collection, addDoc } from "firebase/firestore";
 import api from "@/Services/api.js";
 
 export default {
+    props: {
+    openDialog: Boolean,
+      },
   data() {
     return {
       title: "",
@@ -123,10 +121,10 @@ export default {
       startDate: "",
       menu: false,
       menu2: false,
-
+    dialog: this.openDialog,
       inputRules: [(v) => (v && v.length >= 0) || "empty field"],
       isLoading: false,
-      dialog: false,
+ 
       users: null,
       team: [],
       selectedTeam: [],
@@ -134,38 +132,38 @@ export default {
   },
 
   methods: {
-    async submit() {
-      console.log("sdate", this.selectedTeam);
-      if (this.$refs.form.validate()) {
-        this.isLoading = true;
+    // async submit() {
+    //   console.log("sdate", this.selectedTeam);
+    //   if (this.$refs.form.validate()) {
+    //     this.isLoading = true;
 
-        const project = {
-          projectName: this.title,
-          startingDate: this.startDate,
-          dueDate: this.dueDate,
-          createdBy: sessionStorage.getItem("userName"),
-          teamMembers: this.selectedTeam.toString(),
-          information: this.info,
-        };
+    //     const project = {
+    //       projectName: this.title,
+    //       startingDate: this.startDate,
+    //       dueDate: this.dueDate,
+    //       createdBy: sessionStorage.getItem("userName"),
+    //       teamMembers: this.selectedTeam.toString(),
+    //       information: this.info,
+    //     };
 
-        // console.log(project);
-        // console.table(project);
+    //     // console.log(project);
+    //     // console.table(project);
 
-        api
-          .post("api/v1/projects/addProject", project)
-          .then((response) => {
-            console.log(response.data);
-            this.isLoading = false;
-            this.dialog = false;
-            this.$emit("projectAdded");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    //     api
+    //       .post("api/v1/projects/addProject", project)
+    //       .then((response) => {
+    //         console.log(response.data);
+    //         this.isLoading = false;
+    //         this.dialog = false;
+    //         this.$emit("projectAdded");
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
 
-        this.$refs.form.reset();
-      }
-    },
+    //     this.$refs.form.reset();
+    //   }
+    // },
 
     getTeam() {
       api
@@ -186,20 +184,11 @@ export default {
     },
   },
 
-  // computed:{
-  //   computedDate(){
-  //     console.log('111',this.date)
-  //     let abc=(this.data)? 'jj':'kk';
-  //     console.log(abc)
-  //     return (this.data)? format(this.date,'Do MMM YYYY'):'';
-  //   },
-  // },
-
   mounted() {
     this.getTeam();
   },
 };
 </script>
-
-<style>
+  
+  <style>
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div class="dashboard">
-    <h1 class="subheading grey--text">Dashboard</h1>
+    <h1 class="subheading grey--text">Dashboard - All Tasks</h1>
     <v-container class="my-5">
       <v-row class="mb-3">
-        <v-tooltip top>
+        <v-col cols="10">
+          <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               small
@@ -36,6 +37,12 @@
           </template>
           <span>order by the person name</span>
         </v-tooltip>
+        </v-col>
+        <v-col>
+          <v-btn>Add Tasks</v-btn>
+          <AddTasksPopup :openDialog=true></AddTasksPopup>
+        </v-col>
+        
       </v-row>
 
       <v-card text v-for="project in projects" :key="project.taskId" class="mt-2">
@@ -80,58 +87,14 @@
 // import { collection, onSnapshot } from "firebase/firestore"; 
 import api from "@/Services/api.js";
 import { parse, isPast } from "date-fns";
+import AddTasksPopup from "@/components/AddTasksPopup.vue";
 
 export default {
   name: "DashboardView",
 
-  components: {},
+  components: {AddTasksPopup},
   data() {
     return {
-      // projects: [
-      //   {
-      //     title: "Design a new website",
-      //     person: "Kasun",
-      //     due: "1st Jan 2019",
-      //     status: "ongoing",
-      //     content:
-      //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-      //   },
-      //   {
-      //     title: "Code up the homepage",
-      //     person: "Chun Li",
-      //     due: "10th Jan 2019",
-      //     status: "complete",
-      //     content:
-      //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-      //   },
-      //   {
-      //     title: "Design video thumbnails",
-      //     person: "Ryu",
-      //     due: "20th Dec 2018",
-      //     status: "complete",
-      //     content:
-      //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-      //   },
-      //   {
-      //     title: "Create a community forum",
-      //     person: "Gouken",
-      //     due: "20th Oct 2018",
-      //     status: "overdue",
-      //     content:
-      //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-      //   },
-      // ],
-
-    //   private ProjectEntity project;
-    // private int taskId;
-    // private String title;
-    // private String content;
-    // private String assignedTo;
-    // private String createdBy;
-    // private String createdDate;
-    // private String dueDate;
-    // private boolean activeStatus;
-
       projects :[],
     };
   },

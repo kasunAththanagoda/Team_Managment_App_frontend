@@ -1,6 +1,6 @@
 <template>
   <div class="projects">
-    <h1 class="subheading grey--text">Projects</h1>
+    <h1 class="subheading grey--text">My Tasks</h1>
 
     <v-container class="my-5">
       <v-expansion-panels>
