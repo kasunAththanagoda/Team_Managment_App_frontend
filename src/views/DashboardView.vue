@@ -5,48 +5,56 @@
       <v-row class="mb-3">
         <v-col cols="10">
           <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              small
-              color="grey "
-              @click="sortBy('title')"
-              class="mx-5"
-              v-bind="attrs"
-              v-on="on"
-            >
-              <v-icon small left>mdi-folder</v-icon>
-              <span class="caption text-lowecase">By project name</span>
-            </v-btn>
-          </template>
-          <span>order by the project name</span>
-        </v-tooltip>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                small
+                color="grey "
+                @click="sortBy('title')"
+                class="mx-5"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon small left>mdi-folder</v-icon>
+                <span class="caption text-lowecase">By project name</span>
+              </v-btn>
+            </template>
+            <span>order by the project name</span>
+          </v-tooltip>
 
-        <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              small
-              color="grey "
-              @click="sortBy('person')"
-              class="mx-5"
-              v-bind="attrs"
-              v-on="on"
-            >
-              <v-icon small left>mdi-account</v-icon>
-              <span class="caption text-lowecase">By person</span>
-            </v-btn>
-          </template>
-          <span>order by the person name</span>
-        </v-tooltip>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                small
+                color="grey "
+                @click="sortBy('person')"
+                class="mx-5"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon small left>mdi-account</v-icon>
+                <span class="caption text-lowecase">By person</span>
+              </v-btn>
+            </template>
+            <span>order by the person name</span>
+          </v-tooltip>
         </v-col>
         <v-col>
-          <v-btn>Add Tasks</v-btn>
-          <AddTasksPopup :openDialog=true></AddTasksPopup>
+          <v-btn @click="openAddTask">Add Tasks</v-btn>
+          <AddTasksPopup
+            v-if="openDialogs"
+            @taskAdded="renew"
+            @closeDialog="openDialogs = false"
+          ></AddTasksPopup>
         </v-col>
-        
       </v-row>
 
-      <v-card text v-for="project in projects" :key="project.taskId" class="mt-2">
-        <div :class="`pa-3 project ${project.status}`" >
+      <v-card
+        text
+        v-for="project in projects"
+        :key="project.taskId"
+        class="mt-2"
+      >
+        <div :class="`pa-3 project ${project.status}`">
           <v-row>
             <v-col cols="6" md="3">
               <div class="caption grey--text">Project title</div>
@@ -84,7 +92,7 @@
 
 <script>
 // import db from "@/fb";
-// import { collection, onSnapshot } from "firebase/firestore"; 
+// import { collection, onSnapshot } from "firebase/firestore";
 import api from "@/Services/api.js";
 import { parse, isPast } from "date-fns";
 import AddTasksPopup from "@/components/AddTasksPopup.vue";
@@ -92,10 +100,11 @@ import AddTasksPopup from "@/components/AddTasksPopup.vue";
 export default {
   name: "DashboardView",
 
-  components: {AddTasksPopup},
+  components: { AddTasksPopup },
   data() {
     return {
-      projects :[],
+      projects: [],
+      openDialogs: false,
     };
   },
 
@@ -104,61 +113,64 @@ export default {
       this.projects.sort((a, b) => (a[property] < b[property] ? -1 : 1));
     },
 
-    getTasks(){
-     api
-    .get("api/v1/tasks/getTasks")
-    .then((result) => {
-      console.log("results",result)
-      result.data.data.forEach(element => {
-        console.log("statussssss",element.activeStatus)
-        let statuss="";
-        if(element.activeStatus){ //1-ongoing
-          const parsedDate = parse(element.dueDate, "dd/MM/yyyy", new Date());
-          const isOverdue = isPast(parsedDate);
-          console.log(element.dueDate,"111111111",element.activeStatus,"22222",isOverdue) //correct this
-          statuss=isOverdue? "overdue":"ongoing";
-        }
-        else{
-          statuss="complete"
-        }
-        this.projects.push({
-          taskId: element.taskId,
-          title: element.project.projectName,
-          task: element.title,
-          person: element.assignedTo,
-          due: element.dueDate,
-          status: statuss,
-          content: element.content
+    openAddTask() {
+      console.log("clicked");
+      this.openDialogs = true;
+      console.log(this.openDialogs);
+    },
+
+    getTasks() {
+      api
+        .get("api/v1/tasks/getTasks")
+        .then((result) => {
+          console.log("results", result);
+          result.data.data.forEach((element) => {
+            console.log("statussssss", element.activeStatus);
+            let statuss = "";
+            if (element.activeStatus) {
+              //1-ongoing
+              const parsedDate = parse(
+                element.dueDate,
+                "dd/MM/yyyy",
+                new Date()
+              );
+              const isOverdue = isPast(parsedDate);
+              console.log(
+                element.dueDate,
+                "111111111",
+                element.activeStatus,
+                "22222",
+                isOverdue
+              ); //correct this
+              statuss = isOverdue ? "overdue" : "ongoing";
+            } else {
+              statuss = "complete";
+            }
+            this.projects.push({
+              taskId: element.taskId,
+              title: element.project.projectName,
+              task: element.title,
+              person: element.assignedTo,
+              due: element.dueDate,
+              status: statuss,
+              content: element.content,
+            });
+          });
+          console.table(this.projects);
         })
-        
-      });
-      console.table(this.projects);
-    }).catch((err) => {
-      console.log(err)
-    });
-  }
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    renew() {
+      this.getTasks();
+      this.openDialogs = false;
+    },
   },
 
-  
-
-  async created(){
-   this.getTasks()
-//     onSnapshot(collection(db, "projects"), docsSnap => {
-//       const changes=docsSnap.docChanges();
-
-//       changes.forEach(change=>{
-//         if(change.type=== 'added'){
-//           this.projects.push(
-//             {
-//               ...change.doc.data(),
-//               id : change.doc.id
-//             }
-//           )
-//         }
-//       });
-// });
-
-
+  async created() {
+    this.getTasks();
   },
 };
 </script>
