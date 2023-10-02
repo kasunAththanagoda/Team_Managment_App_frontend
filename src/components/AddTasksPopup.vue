@@ -116,9 +116,6 @@
 </template>
   
   <script>
-//import format from 'date-fns/format';
-// import db from '@/fb';
-// import { collection, addDoc } from "firebase/firestore";
 import api from "@/Services/api.js";
 
 export default {

@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
-import ProjectsView from '@/views/ProjectsView.vue'
+import MyTasksView from '@/views/MyTasksView.vue'
 import TeamView from '@/views/TeamView.vue'
 import LoginView from '@/views/LoginView'
 import SignupView from '@/views/SignUpView'
+import ProjectsView from '@/views/ProjectsView.vue'
 
 Vue.use(VueRouter)
 
@@ -15,9 +16,9 @@ const routes = [
     component: DashboardView
   },
   {
-    path: '/projects',
-    name: 'projects',
-    component:ProjectsView
+    path: '/myTasks',
+    name: 'MyTasks',
+    component:MyTasksView
   },
   {
     path: '/team',
@@ -33,6 +34,11 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component:SignupView
+  },
+  {
+    path: '/projects',
+    name: 'projects',
+    component:ProjectsView
   }
 ]
 
