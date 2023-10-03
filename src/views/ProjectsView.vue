@@ -1,6 +1,7 @@
 <template>
   <div class="projects">
-    <h1 class="subheading grey--text">Projects</h1>
+    <NavBar></NavBar>
+    <h1 class="subheading grey--text ma-10" >Projects</h1>
     <v-container class="my-5">
       <v-data-table
         :headers="headers"
@@ -84,6 +85,7 @@
   <script>
 import PopUp from "@/components/PopUp.vue";
 import UpdateProjectPopupVue from "@/components/UpdateProjectPopup.vue";
+import NavBar from "@/components/NavBar.vue";
 
 import api from "@/Services/api.js";
 import { parse, isPast } from "date-fns";
@@ -91,7 +93,7 @@ import { parse, isPast } from "date-fns";
 export default {
   name: "ProjectsView",
 
-  components: { PopUp, UpdateProjectPopupVue },
+  components: { PopUp, UpdateProjectPopupVue,NavBar },
 
   data() {
     return {
@@ -114,6 +116,7 @@ export default {
         text: "",
         color: "",
         expanded: [],
+        username: sessionStorage.getItem("userName"),
       },
     };
   },

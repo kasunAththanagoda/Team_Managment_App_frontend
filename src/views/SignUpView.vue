@@ -1,16 +1,31 @@
 <template>
+  <v-img
+      src="/gear.jpg"
+      style="height: 100vh; width: 100%;"
+      
+    >
   <div
     style="
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 80vh;
+     
     "
   >
-    <v-card elevation="12" width="50%" style="text-align: center; height: 80vh">
+    <v-card elevation="12" width="50%" style="text-align: center; height: 100vh" class="my-3">
       <v-card-title class="headline">Sign Up</v-card-title>
       <v-card-text>
         <v-form @submit.prevent="register">
+
+
+
+
+
+
+
+
+
+
           <v-text-field v-model="firstName" label="First Name"></v-text-field>
           <v-text-field v-model="lastName" label="Last Name"></v-text-field>
           <v-text-field v-model="nic" label="NIC"></v-text-field>
@@ -22,7 +37,52 @@
             label="Password"
             type="password"
           ></v-text-field>
-          <v-btn color="primary"  @click="signup">Sign Up</v-btn>
+
+    
+
+
+
+    
+
+
+
+
+
+          <v-container class="pa-2">
+        <h4 class="text-left">choose an avatar</h4>
+        <v-item-group
+          v-model="selected"
+        >
+          <v-row>
+            <v-col
+              v-for="(item,i) in items"
+              :key="i"
+              cols="12"
+              md="2"
+            >
+              <v-item v-slot="{ active, toggle }">
+                <v-img
+                  :src="item"
+                  height="100"
+                  class="text-right pa-2"
+                  @click="toggle"
+                >
+                  <v-btn
+                    icon
+                    dark
+                  >
+                    <v-icon :color="active ? '#cd84f1' : ''">
+                      {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
+                    </v-icon>
+                  </v-btn>
+                </v-img>
+              </v-item>
+            </v-col>
+          </v-row>
+        </v-item-group>
+      </v-container>
+
+          <v-btn color="primary"  @click="signup" class="mt-5">Sign Up</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -34,6 +94,7 @@
       </div>
     </v-snackbar>
   </div>
+  </v-img>
 </template>
       
       <script>
@@ -59,6 +120,21 @@ export default {
         text: "",
         color: "",
       },
+      items: [
+      {
+        src: '/animal1.jpg',
+      },
+      {
+        src: '/animal2.jpg',
+      },
+      {
+        src: '/animal3.jpg',
+      },
+      {
+        src: '/animal4.jpg',
+      },
+    ],
+    selected:"",
     };
   },
 
@@ -86,10 +162,12 @@ signup(){
   "userJobTitle": this.jobTitle,
   "userEmail": this.email,
   "userName": this.username,
-  "password": this.password
+  "password": this.password,
+  "avatar": this.items[this.selected].src,
   }
 
   console.log("clicked",user)
+  console.log(user.avatar)
 
   api
     .post("api/v1/users/saveUser",user)

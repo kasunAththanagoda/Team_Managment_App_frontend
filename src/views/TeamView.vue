@@ -1,6 +1,8 @@
 <template>
+  
   <div class="team">
-    <h1 class="subheading grey--text">Team</h1>
+    <NavBar></NavBar>
+    <h1 class="subheading grey--text ma-10">Team</h1>
 
     <v-container class="my-5">
       <v-row>
@@ -37,17 +39,22 @@
   
   <script>
 import api from "@/Services/api.js";
+import NavBar from "@/components/NavBar.vue";
 
 export default {
+  components: {
+    NavBar,
+  },
   data() {
     return {
       team: [
-        { name: "Kasun", role: "Web developer", avatar: "/img 1.jpg" },
-        { name: "Ryu", role: "Graphic designer", avatar: "/img 2.jpg" },
-        { name: "Chun Li", role: "Web developer", avatar: "/img 3.jpg" },
-        { name: "Gouken", role: "Social media maverick", avatar: "/img 4.jpg" },
-        { name: "Yoshi", role: "Sales guru", avatar: "/img 5.jpg" },
+        // { name: "Kasun", role: "Web developer", avatar: "/img 1.jpg" },
+        // { name: "Ryu", role: "Graphic designer", avatar: "/img 2.jpg" },
+        // { name: "Chun Li", role: "Web developer", avatar: "/img 3.jpg" },
+        // { name: "Gouken", role: "Social media maverick", avatar: "/img 4.jpg" },
+        // { name: "Yoshi", role: "Sales guru", avatar: "/img 5.jpg" },
       ],
+      username: sessionStorage.getItem("userName"),
     };
   },
 
@@ -56,11 +63,12 @@ export default {
       api
         .get("api/v1/users/getAllUsers")
         .then((response) => {
-          console.log(response);
+          console.log("team",response);
           response.data.data.forEach((element) => {
             this.team.push({
               name: element.userFirstName,
               role: element.userJobTitle,
+              avatar: element.avatar,
             });
           });
           console.table("team", this.team);

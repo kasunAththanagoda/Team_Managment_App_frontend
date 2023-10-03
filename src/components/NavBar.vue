@@ -49,8 +49,8 @@
     <v-navigation-drawer v-model="drawer" color="#6F61C0" temporary app>
       <v-row align-center>
         <v-col>
-          <v-avatar size="100" class="ma-5"
-            ><img src="/img 1.jpg" alt="avatar image"
+          <v-avatar size="100" class="ma-10 "
+            ><img :src="avatar" alt="avatar image"
           /></v-avatar>
           <p class="white--text subheading mt-1 mx-5">{{ user }}</p>
         </v-col>
@@ -114,6 +114,7 @@ export default {
       ],
       snackbar: false,
       showSignOutDialog: false,
+      avatar: sessionStorage.getItem("avatar")
     };
   },
 
@@ -123,7 +124,7 @@ export default {
     },
     confirmSignout(){
     sessionStorage.clear();
-    this.$router.push("/login");
+    this.$router.push("/");
     this.showSignOutDialog=false;
   },
   },

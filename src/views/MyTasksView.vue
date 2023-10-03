@@ -1,6 +1,7 @@
 <template>
-  <div class="projects">
-    <h1 class="subheading grey--text">My Tasks</h1>
+  <div class="myTasks">
+    <NavBar></NavBar>
+    <h1 class="subheading grey--text ma-10">My Tasks</h1>
 
     <v-container class="my-5">
       <v-expansion-panels>
@@ -71,8 +72,12 @@
 // import { collection, onSnapshot } from "firebase/firestore";
 import api from "@/Services/api.js";
 import { parse, isPast } from "date-fns";
+import NavBar from "@/components/NavBar.vue";
 
 export default {
+  components: {
+    NavBar,
+  },
   data() {
     return {
       projects: [],

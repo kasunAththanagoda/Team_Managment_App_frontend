@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-main class="grey lighten-4">
-      <NavBar></NavBar>
-      <v-main class="mx-4 mb-4 mt-6">
+      <!-- <NavBar></NavBar> -->
+      <v-main >
         <router-view />
       </v-main>
     </v-main>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import NavBar from "./components/NavBar.vue";
+// import NavBar from "./components/NavBar.vue";
 
 export default {
   name: "App",
@@ -20,7 +20,7 @@ export default {
   }),
 
   components: {
-    NavBar,
+    // NavBar,
   },
 };
 </script>

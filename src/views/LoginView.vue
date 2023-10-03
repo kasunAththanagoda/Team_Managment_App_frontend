@@ -1,4 +1,9 @@
 <template>
+  <v-img
+      src="/gear.jpg"
+      style="height: 100vh; width: 100%;"
+      
+    >
   <div
     style="
       display: flex;
@@ -7,6 +12,7 @@
       height: 80vh;
     "
   >
+  
     <v-card elevation="12" width="40%" style="text-align: center; height: 50vh" class="pa-3">
       <v-form >
         <h1>Login</h1>
@@ -75,39 +81,7 @@
             >
           </v-row>
 
-        <!-- <v-row>
-          <v-col><label for="username">Username:</label></v-col>
-          <v-col
-            ><v-text-field
-              label="user name"
-              placeholder="user name"
-              solo
-              v-model="username"
-              required
-            ></v-text-field
-          ></v-col>
-        </v-row> -->
-        <!-- <v-row>
-          <v-col><label for="password">Password:</label></v-col>
-          <v-col>
-     
-            <v-text-field
-              label="password"
-              placeholder="password"
-              solo
-              v-model="password"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row> -->
-        <!-- <br />
-        <button @click="login">Login</button>
-        <br /> -->
-        <!-- <button
-          @click="this.$router.push('/signup')"
-        >
-          Signup
-        </button> -->
+ 
       </v-form>
     </v-card>
     <v-snackbar v-model="message.chip" top rounded="pill" :color="message.color"
@@ -115,7 +89,11 @@
         {{ message.text }}
       </div>
     </v-snackbar>
+
+    
+
   </div>
+</v-img>
 </template>
     
     <script>
@@ -152,9 +130,10 @@ export default {
       api
       .post("api/v1/users/login",loginDetails)
       .then(response=>{
-        console.log(response.data)
+        console.log("login",response.data)
         if(response.data.code==200){
-          sessionStorage.setItem("userName",this.username)
+          sessionStorage.setItem("userName",this.username);
+          sessionStorage.setItem("avatar",response.data.data)
           this.$router.push("/dashboard");
         }
         else{

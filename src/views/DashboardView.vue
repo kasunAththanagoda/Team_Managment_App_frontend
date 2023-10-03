@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard">
-    <h1 class="subheading grey--text">Dashboard - All Tasks</h1>
+    <NavBar></NavBar>
+    <h1 class="subheading grey--text ma-10">Dashboard - All Tasks</h1>
     <v-container class="my-5">
       <v-row class="mb-3">
         <v-col cols="10">
@@ -96,15 +97,17 @@
 import api from "@/Services/api.js";
 import { parse, isPast } from "date-fns";
 import AddTasksPopup from "@/components/AddTasksPopup.vue";
+import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: "DashboardView",
 
-  components: { AddTasksPopup },
+  components: { AddTasksPopup,NavBar },
   data() {
     return {
       projects: [],
       openDialogs: false,
+      username: sessionStorage.getItem("userName"),
     };
   },
 
