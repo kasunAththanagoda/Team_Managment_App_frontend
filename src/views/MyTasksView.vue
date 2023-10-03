@@ -98,7 +98,6 @@ export default {
         .then((result) => {
           console.log("results", result);
           result.data.data.forEach((element) => {
-            console.log("statussssss", element.activeStatus);
             let statuss = "";
             if (element.activeStatus) {
               //1-ongoing
@@ -108,13 +107,7 @@ export default {
                 new Date()
               );
               const isOverdue = isPast(parsedDate);
-              console.log(
-                element.dueDate,
-                "111111111",
-                element.activeStatus,
-                "22222",
-                isOverdue
-              ); //correct this
+              //correct this
               statuss = isOverdue ? "overdue" : "ongoing";
             } else {
               statuss = "complete";

@@ -184,7 +184,7 @@ export default {
             this.dialog = false;
             this.message.chip = true;
             this.message.color = "alert";
-            this.message.text = "login failed";
+            this.message.text = "adding task failed";
           });
 
         this.$refs.form.reset();

@@ -175,7 +175,7 @@ export default {
           console.log(response.data.data);
 
           this.users.forEach((user) => {
-            this.team.push({ text: user.userFirstName, value: user.userId });
+            this.team.push({ text: user.userFirstName, id: user.userId });
             //this.team[user.userId]=user.userFirstName;
           });
           console.log("team", this.team);

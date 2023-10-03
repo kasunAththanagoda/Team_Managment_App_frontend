@@ -7,11 +7,75 @@
       height: 80vh;
     "
   >
-    <v-card elevation="12" width="50%" style="text-align: center; height: 50vh">
-      <!-- <v-form > -->
+    <v-card elevation="12" width="40%" style="text-align: center; height: 50vh" class="pa-3">
+      <v-form >
         <h1>Login</h1>
         <br />
-        <v-row>
+        <!-- <v-row>
+        <label for="username">Username:</label><v-text-field
+              label="user name"
+              placeholder="user name"
+              solo
+              v-model="username"
+              required
+            ></v-text-field
+          > </v-row>
+           -->
+          <v-row no-gutters justify="center">
+                <v-col cols="9">
+                  <v-text-field
+                    v-model="username"
+                    class="form-control"
+                    label="Username"
+                    :rules="usernameRules"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row no-gutters justify="center">
+                <v-col cols="9" dense>
+                  <v-text-field
+                    v-model="password"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :rules="rules"
+                    :type="show1 ? 'text' : 'password'"
+                    label="Password"
+                    @click:append="show1 = !show1"
+                    outlined
+                    dense
+                    class="form-control"
+                    v-on:keyup.enter="login()"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+
+              <v-row justify="center" class="mt-6">
+                <!-- <v-col cols="2"></v-col> -->
+                <v-col cols="9">
+                  <v-btn @click="login()" color="orange" block
+                    >LOGIN</v-btn
+                  >
+                </v-col>
+              </v-row>
+
+              <v-row
+            class="mt-5"
+            style="
+              justify-content: center;
+              font-size: 0.9rem;
+              color: black;
+              font-weight: bold;
+            "
+          >
+            <span class="ml-2 mt-2">Don't you have an account?</span>
+            &nbsp;
+            <v-btn plain color="info" @click="$router.push(`/signup`)"
+              >Sign up</v-btn
+            >
+          </v-row>
+
+        <!-- <v-row>
           <v-col><label for="username">Username:</label></v-col>
           <v-col
             ><v-text-field
@@ -22,11 +86,11 @@
               required
             ></v-text-field
           ></v-col>
-        </v-row>
-        <v-row>
+        </v-row> -->
+        <!-- <v-row>
           <v-col><label for="password">Password:</label></v-col>
           <v-col>
-            <!-- <input type="password" id="password" v-model="password"/> -->
+     
             <v-text-field
               label="password"
               placeholder="password"
@@ -35,16 +99,16 @@
               required
             ></v-text-field>
           </v-col>
-        </v-row>
-        <br />
+        </v-row> -->
+        <!-- <br />
         <button @click="login">Login</button>
-        <br />
+        <br /> -->
         <!-- <button
           @click="this.$router.push('/signup')"
         >
           Signup
         </button> -->
-      <!-- </v-form> -->
+      </v-form>
     </v-card>
     <v-snackbar v-model="message.chip" top rounded="pill" :color="message.color"
       ><div class="text-center">
@@ -63,15 +127,17 @@ export default {
     return {
       username: "",
       password: "",
-      nameRules: [
-        (v) => !!v || "Name is required",
-        (v) => v.length <= 10 || "Name must be less than 10 characters",
+      usernameRules: [
+        (v) => !!v || "Username is Required",
+        (v) => v.length <= 15 || "Username must be less than 15 characters",
       ],
+      rules: [(v) => !!v || "Password is Required."],
       message: {
         chip: false,
         text: "",
         color: "",
       },
+      show1: false,
     };
   },
 
@@ -93,14 +159,14 @@ export default {
         }
         else{
           this.message.chip=true;
-      this.message.color="alert";
+      this.message.color="red";
       this.message.text="login failed"
         }
       })
       .catch(error=>{
         console.log(error)
         this.message.chip=true;
-      this.message.color="alert";
+      this.message.color="red";
       this.message.text="something went wrong"
       });
       console.log("22222")

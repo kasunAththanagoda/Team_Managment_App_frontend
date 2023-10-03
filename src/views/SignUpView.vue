@@ -26,7 +26,7 @@
         </v-form>
       </v-card-text>
     </v-card>
-    <v-btn color="primary" @click="getData">click me</v-btn>
+    <!-- <v-btn color="primary" @click="getData">click me</v-btn> -->
     
     <v-snackbar v-model="message.chip" top rounded="pill" :color="message.color"
       ><div class="text-center">
@@ -63,20 +63,20 @@ export default {
   },
 
   methods: {
-    getData(){
-      console.log("clicked");
-      api
-      .get('api/v1/users/getAllUsers?page=0&size=10')
-      .then(response => {
-        // Handle the response data here
-        console.log(response.data);
-      })
-      .catch(error => {
-        // Handle errors here
-        console.error(error);
-      });
-      console.log("clicked 2");
-    },
+    // getData(){
+    //   console.log("clicked");
+    //   api
+    //   .get('api/v1/users/getAllUsers?page=0&size=10')
+    //   .then(response => {
+    //     // Handle the response data here
+    //     console.log(response.data);
+    //   })
+    //   .catch(error => {
+    //     // Handle errors here
+    //     console.error(error);
+    //   });
+    //   console.log("clicked 2");
+    // },
 
 signup(){
   let user={
@@ -98,7 +98,7 @@ signup(){
       this.message.chip=true;
       this.message.color="success";
       this.message.text="user added succcessfully"
-      this.$router.push("/dashboard");
+      this.$router.push("/login");
     })
     .catch(error=>{
       console.log(error)

@@ -39,7 +39,7 @@
           </v-tooltip>
         </v-col>
         <v-col>
-          <v-btn @click="openAddTask">Add Tasks</v-btn>
+          <v-btn @click="openAddTask" color="#55efc4">Add Tasks</v-btn>
           <AddTasksPopup
             v-if="openDialogs"
             @taskAdded="renew"

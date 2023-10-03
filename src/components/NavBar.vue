@@ -40,7 +40,7 @@
         </v-menu>
       </div>
 
-      <v-btn text class="grey--text">
+      <v-btn text class="grey--text" @click="openSignout">
         <span>sign out</span>
         <v-icon right>mdi-exit-to-app</v-icon>
       </v-btn>
@@ -81,6 +81,19 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    <v-dialog v-model="showSignOutDialog" max-width="500px">
+      <v-card>
+        <v-card-title>Sign Out</v-card-title>
+        <v-card-text>
+          Are you sure you want to sign out?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="confirmSignout" class="ma-2" >Yes</v-btn>
+          <v-btn color="error" @click="showSignOutDialog = false" class="ma-2">No</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </nav>
 </template>
 
@@ -95,12 +108,27 @@ export default {
       user: "",
       links: [
         { icon: "mdi-view-dashboard", text: "Dashboard", route: "/dashboard" },
-        { icon: "mdi-folder", text: "My Tasks", route: "/projects" },
+        { icon: "mdi-folder", text: "My Tasks", route: "/myTasks" },
+        { icon: "mdi-rhombus-split", text: "Projects", route: "/projects" },
         { icon: "mdi-account", text: "Team", route: "/team" },
       ],
       snackbar: false,
+      showSignOutDialog: false,
     };
   },
+
+  methods:{
+    openSignout(){
+      this.showSignOutDialog=true;
+    },
+    confirmSignout(){
+    sessionStorage.clear();
+    this.$router.push("/login");
+    this.showSignOutDialog=false;
+  },
+  },
+ 
+
 
   mounted() {
     if (sessionStorage.getItem("userName"))
