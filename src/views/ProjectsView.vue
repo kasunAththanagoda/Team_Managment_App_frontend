@@ -1,7 +1,7 @@
 <template>
   <div class="projects">
     <NavBar></NavBar>
-    <h1 class="subheading grey--text ma-10" >Projects</h1>
+    <h1 class="subheading grey--text ma-10">Projects</h1>
     <v-container class="my-5">
       <v-data-table
         :headers="headers"
@@ -10,7 +10,6 @@
         class="elevation-3"
         show-expand
         item-key="projectName"
-        
       >
         <template v-slot:top>
           <v-toolbar flat>
@@ -92,7 +91,7 @@ import { parse, isPast } from "date-fns";
 export default {
   name: "ProjectsView",
 
-  components: { PopUp, UpdateProjectPopupVue,NavBar },
+  components: { PopUp, UpdateProjectPopupVue, NavBar },
 
   data() {
     return {

@@ -102,7 +102,7 @@ import NavBar from "@/components/NavBar.vue";
 export default {
   name: "DashboardView",
 
-  components: { AddTasksPopup,NavBar },
+  components: { AddTasksPopup, NavBar },
   data() {
     return {
       projects: [],

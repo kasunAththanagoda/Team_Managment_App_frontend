@@ -154,13 +154,7 @@ export default {
         });
     },
   },
-  computed: {
-    // myProjects() {
-    //   return this.projects.filter(project => {
-    //     return project.person === 'Kasun' && project.status != 'complete'
-    //   })
-    // }
-  },
+  computed: {},
   async created() {
     this.getTasks();
   },

@@ -3,10 +3,8 @@
     <v-dialog v-model="dialog" width="600" persistent>
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-            
           Add new Task
-          <v-spacer>
-          </v-spacer>
+          <v-spacer> </v-spacer>
           <v-icon @click="closeDialog">mdi-close-circle-outline</v-icon>
         </v-card-title>
 
@@ -119,9 +117,9 @@
 import api from "@/Services/api.js";
 
 export default {
-//   props: {
-//     openDialog: Boolean,
-//   },
+  //   props: {
+  //     openDialog: Boolean,
+  //   },
   data() {
     return {
       title: "",
@@ -133,7 +131,6 @@ export default {
       dialog: true,
       inputRules: [(v) => (v && v.length >= 0) || "empty field"],
       isLoading: false,
-
       users: null,
       team: [],
       selectedTeam: [],
@@ -227,13 +224,13 @@ export default {
         });
     },
 
-    closeDialog(){
-        this.$emit("closeDialog")
+    closeDialog() {
+      this.$emit("closeDialog");
     },
   },
 
   mounted() {
-    console.log("created",this.openDialog)
+    console.log("created", this.openDialog);
     this.getTeam();
     this.getProjects();
   },

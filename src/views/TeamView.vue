@@ -1,5 +1,4 @@
 <template>
-  
   <div class="team">
     <NavBar></NavBar>
     <h1 class="subheading grey--text ma-10">Team</h1>
@@ -63,7 +62,7 @@ export default {
       api
         .get("api/v1/users/getAllUsers")
         .then((response) => {
-          console.log("team",response);
+          console.log("team", response);
           response.data.data.forEach((element) => {
             this.team.push({
               name: element.userFirstName,

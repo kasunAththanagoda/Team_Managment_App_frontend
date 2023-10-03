@@ -49,7 +49,7 @@
     <v-navigation-drawer v-model="drawer" color="#6F61C0" temporary app>
       <v-row align-center>
         <v-col class="text-center">
-          <v-avatar size="100" class="ma-10 "
+          <v-avatar size="100" class="ma-10"
             ><img :src="avatar" alt="avatar image"
           /></v-avatar>
           <p class="white--text heading mt-1 mx-5 text-center">{{ user }}</p>
@@ -84,13 +84,15 @@
     <v-dialog v-model="showSignOutDialog" max-width="500px">
       <v-card>
         <v-card-title>Sign Out</v-card-title>
-        <v-card-text>
-          Are you sure you want to sign out?
-        </v-card-text>
+        <v-card-text> Are you sure you want to sign out? </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="confirmSignout" class="ma-2" >Yes</v-btn>
-          <v-btn color="error" @click="showSignOutDialog = false" class="ma-2">No</v-btn>
+          <v-btn color="primary" @click="confirmSignout" class="ma-2"
+            >Yes</v-btn
+          >
+          <v-btn color="error" @click="showSignOutDialog = false" class="ma-2"
+            >No</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -114,28 +116,27 @@ export default {
       ],
       snackbar: false,
       showSignOutDialog: false,
-      avatar: sessionStorage.getItem("avatar")
+      avatar: sessionStorage.getItem("avatar"),
     };
   },
 
-  methods:{
-    openSignout(){
-      this.showSignOutDialog=true;
+  methods: {
+    openSignout() {
+      this.showSignOutDialog = true;
     },
-    confirmSignout(){
-    sessionStorage.clear();
-    this.$router.push("/");
-    this.showSignOutDialog=false;
+    confirmSignout() {
+      sessionStorage.clear();
+      this.$router.push("/");
+      this.showSignOutDialog = false;
+    },
   },
-  },
- 
+
   mounted() {
-    if (sessionStorage.getItem("userName")){
+    if (sessionStorage.getItem("userName")) {
       this.user = sessionStorage.getItem("userName");
-    }else{
-      this.$router.push("/")
+    } else {
+      this.$router.push("/");
     }
-      
   },
 };
 </script>
