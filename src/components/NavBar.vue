@@ -48,11 +48,11 @@
 
     <v-navigation-drawer v-model="drawer" color="#6F61C0" temporary app>
       <v-row align-center>
-        <v-col>
+        <v-col class="text-center">
           <v-avatar size="100" class="ma-10 "
             ><img :src="avatar" alt="avatar image"
           /></v-avatar>
-          <p class="white--text subheading mt-1 mx-5">{{ user }}</p>
+          <p class="white--text heading mt-1 mx-5 text-center">{{ user }}</p>
         </v-col>
       </v-row>
       <v-row class="ma-5">
@@ -129,11 +129,13 @@ export default {
   },
   },
  
-
-
   mounted() {
-    if (sessionStorage.getItem("userName"))
+    if (sessionStorage.getItem("userName")){
       this.user = sessionStorage.getItem("userName");
+    }else{
+      this.$router.push("/")
+    }
+      
   },
 };
 </script>

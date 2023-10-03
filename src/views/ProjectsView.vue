@@ -9,9 +9,8 @@
         :items-per-page="5"
         class="elevation-3"
         show-expand
-        single-expand="true"
         item-key="projectName"
-        :expanded.sync="expanded"
+        
       >
         <template v-slot:top>
           <v-toolbar flat>
