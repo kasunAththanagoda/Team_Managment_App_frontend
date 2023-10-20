@@ -126,6 +126,7 @@ export default {
     },
     confirmSignout() {
       sessionStorage.clear();
+      localStorage.clear();
       this.$router.push("/");
       this.showSignOutDialog = false;
     },

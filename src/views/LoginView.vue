@@ -122,18 +122,32 @@ export default {
   methods: {
     login() {
       let loginDetails = {
-        "userName": this.username,
+        "username": this.username,
         "password": this.password,
       };
       console.log(loginDetails)
 
       api
-      .post("api/v1/users/login",loginDetails)
+      .post("api/v1/users/authenticate",loginDetails)
       .then(response=>{
-        console.log("login",response.data)
-        if(response.data.code==200){
+        console.log("login",response)
+        if(response.status==200){
+          localStorage.setItem('token', response.data.jwtToken);
           sessionStorage.setItem("userName",this.username);
-          sessionStorage.setItem("avatar",response.data.data)
+
+          api
+      .post("api/v1/users/getAvatar",this.username)
+      .then(response=>{
+        console.log(response);
+        sessionStorage.setItem("avatar",response.data.data)
+      })
+      .catch(error=>{
+        sessionStorage.setItem("avatar","/animal1.jpg")
+        console.log("error : ",error)
+      })
+
+
+          
           this.$router.push("/dashboard");
         }
         else{
