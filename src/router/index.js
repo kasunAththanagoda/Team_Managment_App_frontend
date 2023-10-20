@@ -6,6 +6,7 @@ import TeamView from '@/views/TeamView.vue'
 import LoginView from '@/views/LoginView'
 import SignupView from '@/views/SignUpView'
 import ProjectsView from '@/views/ProjectsView.vue'
+import NotFoundView from '@/views/NotFoundView'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/projects',
     name: 'projects',
     component:ProjectsView
+  },
+  {
+    path: '*',
+    name: 'NotFoundView',
+    component: NotFoundView
   }
 ]
 
