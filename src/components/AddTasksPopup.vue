@@ -141,6 +141,7 @@ export default {
         text: "",
         color: "",
       },
+      jwtToken: localStorage.getItem('token'),
     };
   },
 
@@ -163,9 +164,13 @@ export default {
 
         // console.log(project);
         console.table(task);
+        console.log("tasks : ",task)
 
         api
-          .post("api/v1/tasks/addTask", task)
+          .post("api/v1/tasks/addTask", task
+          , {
+    headers: {
+      Authorization: `Bearer ${this.jwtToken}` }})
           .then((response) => {
             console.log(response.data);
             this.isLoading = false;
@@ -190,7 +195,9 @@ export default {
 
     getTeam() {
       api
-        .get("api/v1/users/getAllUsers")
+        .get("api/v1/users/getAllUsers", {
+    headers: {
+      Authorization: `Bearer ${this.jwtToken}` }})
         .then((response) => {
           this.users = response.data.data;
           console.log(response.data.data);
@@ -208,7 +215,9 @@ export default {
 
     getProjects() {
       api
-        .get("api/v1/projects/getProjects")
+        .get("api/v1/projects/getProjects", {
+    headers: {
+      Authorization: `Bearer ${this.jwtToken}` }})
         .then((response) => {
           console.log("projects:: ", response.data.data);
           response.data.data.forEach((project) => {

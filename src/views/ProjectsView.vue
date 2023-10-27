@@ -114,8 +114,10 @@ export default {
         text: "",
         color: "",
         expanded: [],
-        username: sessionStorage.getItem("userName"),
       },
+      jwtToken: localStorage.getItem("token"),
+      expanded: [],
+      username: sessionStorage.getItem("userName"),
     };
   },
 
@@ -142,7 +144,12 @@ export default {
       console.log("SDfsdf", this.selectedProject.projectId);
       api
         .delete(
-          `api/v1/projects/deleteProject?projectId=${this.selectedProject.projectId}`
+          `api/v1/projects/deleteProject?projectId=${this.selectedProject.projectId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.jwtToken}`,
+            },
+          }
         )
         .then((result) => {
           console.log("deleted", result.data);
@@ -183,7 +190,11 @@ export default {
 
     getProjects() {
       api
-        .get("api/v1/projects/getProjects")
+        .get("api/v1/projects/getProjects", {
+          headers: {
+            Authorization: `Bearer ${this.jwtToken}`,
+          },
+        })
         .then((response) => {
           console.log("projects:: ", response.data.data);
 

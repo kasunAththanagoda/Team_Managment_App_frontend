@@ -139,6 +139,7 @@
         text: "",
         color: "",
       },
+      jwtToken: localStorage.getItem('token'),
       };
     },
     
@@ -167,7 +168,10 @@
           };
   
           api
-            .put("api/v1/projects/updateProject", project)
+            .put("api/v1/projects/updateProject", project
+            , {
+    headers: {
+      Authorization: `Bearer ${this.jwtToken}` }})
             .then((response) => {
               console.log(response.data);
               this.isLoading = false;
@@ -190,7 +194,9 @@
   
       getTeam() {
         api
-          .get("api/v1/users/getAllUsers")
+          .get("api/v1/users/getAllUsers", {
+    headers: {
+      Authorization: `Bearer ${this.jwtToken}` }})
           .then((response) => {
             this.users = response.data.data;
             console.log(response.data.data);

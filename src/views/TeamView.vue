@@ -54,13 +54,16 @@ export default {
         // { name: "Yoshi", role: "Sales guru", avatar: "/img 5.jpg" },
       ],
       username: sessionStorage.getItem("userName"),
+      jwtToken: localStorage.getItem('token'),
     };
   },
 
   methods: {
     getTeamMembers() {
       api
-        .get("api/v1/users/getAllUsers")
+        .get("api/v1/users/getAllUsers", {
+    headers: {
+      Authorization: `Bearer ${this.jwtToken}` }})
         .then((response) => {
           console.log("team", response);
           response.data.data.forEach((element) => {

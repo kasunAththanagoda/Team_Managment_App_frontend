@@ -108,6 +108,7 @@ export default {
       projects: [],
       openDialogs: false,
       username: sessionStorage.getItem("userName"),
+      jwtToken: localStorage.getItem('token'),
     };
   },
 
@@ -124,7 +125,9 @@ export default {
 
     getTasks() {
       api
-        .get("api/v1/tasks/getTasks")
+        .get("api/v1/tasks/getTasks", {
+    headers: {
+      Authorization: `Bearer ${this.jwtToken}` }})
         .then((result) => {
           console.log("results", result);
           result.data.data.forEach((element) => {

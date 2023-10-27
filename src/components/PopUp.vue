@@ -130,6 +130,7 @@ export default {
       users: null,
       team: [],
       selectedTeam: [],
+      jwtToken: localStorage.getItem("token"),
     };
   },
 
@@ -152,7 +153,11 @@ export default {
         // console.table(project);
 
         api
-          .post("api/v1/projects/addProject", project)
+          .post("api/v1/projects/addProject", project, {
+            headers: {
+              Authorization: `Bearer ${this.jwtToken}`,
+            },
+          })
           .then((response) => {
             console.log(response.data);
             this.isLoading = false;
@@ -169,7 +174,11 @@ export default {
 
     getTeam() {
       api
-        .get("api/v1/users/getAllUsers")
+        .get("api/v1/users/getAllUsers", {
+          headers: {
+            Authorization: `Bearer ${this.jwtToken}`,
+          },
+        })
         .then((response) => {
           this.users = response.data.data;
           console.log(response.data.data);

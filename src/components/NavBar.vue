@@ -46,13 +46,13 @@
       </v-btn>
     </v-toolbar>
 
-    <v-navigation-drawer v-model="drawer" color="#6F61C0" temporary app>
+    <v-navigation-drawer v-model="drawer" color="#95afc0" temporary app>
       <v-row align-center>
         <v-col class="text-center">
           <v-avatar size="100" class="ma-10"
             ><img :src="avatar" alt="avatar image"
           /></v-avatar>
-          <p class="white--text heading mt-1 mx-5 text-center">{{ user }}</p>
+          <p class=" heading mt-1 mx-5 text-center">{{ user }}</p>
         </v-col>
       </v-row>
       <v-row class="ma-5">
@@ -71,10 +71,10 @@
           :to="link.route"
         >
           <v-list-item-action>
-            <v-icon class="white--text">{{ link.icon }}</v-icon>
+            <v-icon >{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="white--text">{{
+            <v-list-item-title >{{
               link.text
             }}</v-list-item-title>
           </v-list-item-content>
@@ -117,6 +117,7 @@ export default {
       snackbar: false,
       showSignOutDialog: false,
       avatar: sessionStorage.getItem("avatar"),
+      jwtToken: localStorage.getItem('token'),
     };
   },
 

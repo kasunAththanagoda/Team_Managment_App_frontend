@@ -88,18 +88,26 @@ export default {
         text: "",
         color: "",
       },
+      jwtToken: localStorage.getItem("token"),
     };
   },
   methods: {
     getTasks() {
-      console.log("username", this.username);
+      console.log("username", this.username ,this.jwtToken);
       api
-        .get("api/v1/tasks/getTasksByUser", {
-          params: {
-            user: this.username,
-            activeStatus: true,
+        .get(
+          "api/v1/tasks/getTasksByUser",
+          {
+            params: {
+              user: this.username,
+              activeStatus: true,
+            },
+            headers: {
+            Authorization: `Bearer ${this.jwtToken}`,
           },
-        })
+          },
+          
+        )
         .then((result) => {
           console.log("results", result);
           result.data.data.forEach((element) => {
@@ -138,7 +146,11 @@ export default {
     toggleTaskStatus(taskId, switchState) {
       console.log(taskId, switchState);
       api
-        .put(`api/v1/tasks/switchActiveStatus?taskId=${taskId}`)
+        .put(`api/v1/tasks/switchActiveStatus?taskId=${taskId}`, {
+          headers: {
+            Authorization: `Bearer ${this.jwtToken}`,
+          },
+        })
         .then((response) => {
           console.log(response.data);
           console.log(`Task ${taskId} activeStatus updated to ${switchState}`);
