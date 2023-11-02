@@ -4,7 +4,7 @@
       <v-card
         elevation="12"
         width="50%"
-        style="text-align: center; height: 100vh"
+        style="text-align: center; height: 115vh"
         class="my-3"
       >
         <v-card-title class="headline">Sign Up</v-card-title>
