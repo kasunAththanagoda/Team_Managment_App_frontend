@@ -11,7 +11,7 @@
       <v-card
         elevation="12"
         width="40%"
-        style="text-align: center; height: 50vh"
+        style="text-align: center; height: 55vh"
         class="pa-3"
       >
         <v-form>
